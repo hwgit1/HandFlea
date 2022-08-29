@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LoginMapper">
+
+	<select id="login" parameterType="kr.co.handflea.util.dto.MemberDTO"
+						resultType="kr.co.handflea.util.dto.MemberDTO">
+	select mem_no, mem_name, mem_email, mem_pwd, mem_photo, mem_photopath, seller_yn
+	from member
+	where mem_email = #{mem_email} and mem_pwd = #{mem_pwd}
+	</select>
+
+</mapper>

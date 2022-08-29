@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReviewMapper"> 
+
+	<select id="selectList" parameterType="java.lang.String" resultType="kr.co.handflea.review.ReviewDTO">
+   select review_no,
+       r.detail_no,
+       r.mem_no,
+       r.prdt_no,
+       r.option_no,
+        (select option_contents from prdt_option where option_no = r.option_no) option_contents,
+       r.review_contents,
+       r.review_photoname,
+       r.review_photopath,
+       r.star_point,
+       r.reg_date,
+       m.mem_name,
+       p.prdt_name,
+       p.thumbnail_path
+   from review r, product p, member m -- , prdt_option o
+   where r.prdt_no = p.prdt_no
+   and m.mem_no = r.mem_no
+   </select>
+   
+   <select id="searchListCount" parameterType="kr.co.handflea.review.ReviewDTO" resultType="int">
+      select count(review_no) cnt
+      from review
+      <if test="searchOption != null and searchOption != ''
+               and searchWord != null and searchWord !=''">
+         <choose>
+            <when test="searchOption == 'title'">
+               where title like concat('%', #{searchWord}, '%')
+            </when>
+            <when test="searchOption == 'writer'">
+               where writer like concat('%', #{searchWord}, '%')
+            </when>
+         </choose>
+      </if>
+   </select>
+
+	<select id="reviewList" parameterType="java.lang.String" resultType="kr.co.handflea.review.ReviewDTO">
+	select review_no,
+	    r.detail_no,
+	    r.mem_no,
+	    r.prdt_no,
+	    r.option_no,
+        (select option_contents from prdt_option where option_no = r.option_no) option_contents,
+	    r.review_contents,
+	    r.review_photoname,
+	    r.review_photopath,
+	    r.star_point,
+	    r.reg_date,
+	    m.mem_name, 
+	    m.mem_photopath
+	from review r, product p, member m -- , prdt_option o
+	where r.prdt_no = p.prdt_no
+	and m.mem_no = r.mem_no
+	and p.prdt_no = #{prdt_no}
+	order by r.review_no desc
+	</select>
+
+	<insert id="write" parameterType="kr.co.handflea.review.ReviewDTO" >
+	insert into review (detail_no, mem_no, prdt_no, option_no, review_contents
+	, review_photoname, review_photopath, star_point, reg_date)
+	values(#{detail_no}, #{mem_no}, (select prdt_no from order_detail where detail_no = #{detail_no}),
+		  (select option_no from order_detail where detail_no = #{detail_no}), #{review_contents}, #{review_photoname}, #{review_photopath}, #{star_point}, now());
+	</insert>
+
+	<select id="getList" parameterType="int" resultType="kr.co.handflea.review.ReviewDTO">
+	select review_no,
+	    order_no,
+	    mem_no,
+	    option_no,
+	    review_contents,
+	    review_photo,
+	    review_photopath,
+	    star_point,
+	    reg_date
+	from review
+	limit #{startNum}, 8
+	</select>
+
+	<select id="myList" parameterType="int" resultType="kr.co.handflea.review.ReviewDTO">
+	select review_no,
+	    order_no,
+	    mem_no,
+	    option_no,
+	    review_contents,
+	    review_photo,
+	    review_photopath,
+	    star_point,
+	    reg_date
+	from review
+	limit #{startNum}, 8
+	</select>
+
+
+</mapper>

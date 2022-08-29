@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+* {
+	margin : 0 auto;
+	padding : 0;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
+main {
+	width: 70%;
+	margin-top : 40px;
+	text-align: center;
+}
+a {
+	text-decoration: none;
+}
+img {
+	width: 40%;
+}
+button {
+	background-color: #0F8BFF;
+	color: white;
+	border: 0;
+	outline: 0;
+}
+.mem-input {
+	width: 30%;
+}
+.mem-input input {
+	padding: 5px;
+	width: 100%;
+	margin-top: 5px;
+}
+#login_btn {
+	font-size: medium;
+	width: 100%;
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 10px;
+}
+#mem_search {
+	font-size: small;
+	color: #808080;
+	float: right;
+}

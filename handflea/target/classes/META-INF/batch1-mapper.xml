@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Batch1Mapper">
+
+	<select id="updatePrdtconList" resultType="kr.co.handflea.order.OrderDTO">
+	select od.detail_no
+	from order_detail od, order_main om, product p
+	where od.order_no = om.order_no
+	and od.prdt_no = p.prdt_no
+	and od.prdt_con = 0
+	and date_format(now(), '%Y-%m-%d') = date_format(date_add(om.order_date, interval (p.prdt_rdy + 1) day), '%Y-%m-%d');
+	</select>
+	
+	<update id="updatePrdtRefund" parameterType="kr.co.handflea.order.OrderDTO">
+	update order_detail
+	set prdt_con = #{prdt_con}
+	where detail_no = #{detail_no}
+	</update>
+
+</mapper>

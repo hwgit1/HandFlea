@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="ProductMapper">
+	
+	
+	<update id="update" parameterType="kr.co.handflea.product.ProductDTO">
+	update product
+	set prdt_name = #{prdt_name}
+		, price = #{price}
+		, delivery_price = #{delivery_price}
+		, description = #{description}
+		, prdt_rdy = #{prdt_rdy}
+		<if test="thumbnail_name != null and thumbnail_name != ''">
+			, thumbnail_name = #{thumbnail_name}
+			, thumbnail_path = #{thumbnail_path}
+		</if>
+		<if test="desc_img_name != null and desc_img_name != ''">
+			, desc_img_name = #{desc_img_name}
+			, desc_img_path = #{desc_img_path}
+		</if>
+	where prdt_no = #{prdt_no}
+	and mem_no = #{mem_no}
+	</update>
+	
+	<update id="fileDelete" parameterType="kr.co.handflea.product.ProductDTO">
+	update product
+		<if test="thumbnail_name != null and thumbnail_name != ''">
+			set thumbnail_name = ''
+			, thumbnail_path = ''
+		</if>
+		<if test="desc_img_name != null and desc_img_name != ''">
+			set desc_img_name = ''
+			, desc_img_path = ''
+		</if>
+	where prdt_no = #{prdt_no}
+	and mem_no = #{mem_no}
+	</update>
+	
+	<update id="delete" parameterType="kr.co.handflea.product.ProductDTO">
+	update product
+	set del_yn = 1
+	, del_date = now()
+	where prdt_no = #{prdt_no}
+	and mem_no = #{mem_no}
+	</update>
+
+	<insert id="optionInsert" parameterType="kr.co.handflea.product.ProductDTO">
+	insert into prdt_option (prdt_no, option_contents)
+	values ( #{prdt_no}, #{option_contents} )
+	</insert>
+	
+	<delete id="optionDelete" parameterType="kr.co.handflea.product.ProductDTO">
+	delete from prdt_option
+	where prdt_no = #{prdt_no}
+	order by option_no desc
+	limit #{limitNum}
+	</delete>
+
+	<update id="updateOption" parameterType="kr.co.handflea.product.ProductDTO">
+	update prdt_option
+	set option_contents = #{option_contents}
+	where option_no = #{option_no}
+	</update>
+	
+	<delete id="optionAllDelete" parameterType="java.lang.String">
+	delete from prdt_option where prdt_no = #{prdt_no}
+	</delete>
+	
+	<select id="optionCnt" parameterType="java.lang.String" resultType="Int">
+	select count(option_no) cnt from prdt_option
+	where prdt_no = #{prdt_no};
+	</select>
+
+	<select id="sellerdetail" parameterType="java.lang.String" resultType="kr.co.handflea.product.ProductDTO">
+	select p.prdt_no, p.prdt_name, p.mem_no, m.mem_email, p.price, p.delivery_price
+		, p.description, p.view_cnt, p.reg_date
+		, p.thumbnail_name, p.thumbnail_path, p.desc_img_name, p.desc_img_path
+		, p.prdt_rdy, p.option_yn, p.bigcate_no, p.smallcate_no, s.seller_name
+    	from product p, member m, seller s
+    	where p.prdt_no = #{prdt_no}
+		and del_yn = 0
+		and p.mem_no = m.mem_no
+		and s.mem_no = m.mem_no
+	</select>
+
+	<select id="sellerlist" parameterType="kr.co.handflea.util.dto.SearchDTO"
+			resultType="kr.co.handflea.product.ProductDTO">
+		select p.prdt_no, p.prdt_name, p.mem_no, m.mem_email, p.price, p.delivery_price
+		, p.description, p.view_cnt, p.reg_date
+		, p.thumbnail_name, p.thumbnail_path, p.desc_img_name, p.desc_img_path
+		, p.prdt_rdy, p.option_yn, p.bigcate_no, p.smallcate_no 
+    	from product p, member m
+		where del_yn = 0
+		<if test="searchOption != null and searchOption != ''
+					and searchWord != null and searchWord !=''">
+			<choose>
+				<when test="searchOption == 'prdt_name'">
+					and p.prdt_name like concat('%', #{searchWord}, '%')
+				</when>
+				<when test="searchOption == 'mem_email'">
+					and m.mem_email like concat('%', #{searchWord}, '%')
+				</when>
+			</choose>
+		</if>
+		and p.mem_no = m.mem_no
+		and p.mem_no = #{mem_no}
+		order by prdt_no desc
+		limit #{limitNum}, 10
+	</select>
+	
+	<select id="searchListCount" parameterType="kr.co.handflea.util.dto.SearchDTO" resultType="int">
+		select count(p.prdt_no) cnt
+		from product p, member m
+		where del_yn = 0
+		<if test="searchOption != null and searchOption != ''
+					and searchWord != null and searchWord !=''">
+			<choose>
+				<when test="searchOption == 'prdt_name'">
+					and p.prdt_name like concat('%', #{searchWord}, '%')
+				</when>
+				<when test="searchOption == 'mem_email'">
+					and mem_email like concat('%', #{searchWord}, '%')
+				</when>
+			</choose>
+		</if>
+		and p.mem_no = m.mem_no
+	</select>
+
+	<select id="option_contents" resultType="kr.co.handflea.product.ProductDTO">
+	select option_no, prdt_no, option_contents
+	from prdt_option
+	where prdt_no = #{prdt_no}
+	order by option_no
+	</select>
+	
+	<select id="detail" parameterType="java.lang.String" resultType="kr.co.handflea.product.ProductDTO">
+	select p.prdt_no, p.prdt_name, p.mem_no, m.mem_email, p.price, p.delivery_price
+		, p.description, p.view_cnt, p.reg_date
+		, p.thumbnail_name, p.thumbnail_path, p.desc_img_name, p.desc_img_path
+		, p.prdt_rdy, p.option_yn, p.bigcate_no, p.smallcate_no, s.seller_name, m.mem_photopath
+    	from product p, member m, seller s
+    	where p.prdt_no = #{prdt_no}
+		and del_yn = 0
+		and p.mem_no = m.mem_no
+		and s.mem_no = m.mem_no
+	</select>
+
+	<select id="smallcatelist" parameterType="java.lang.String"  resultType="kr.co.handflea.product.ProductDTO">
+	select distinct p.prdt_no, p.prdt_name, p.mem_no, m.mem_email, p.price, p.delivery_price
+		, p.description, p.view_cnt, p.reg_date
+		, p.thumbnail_name, p.thumbnail_path, p.desc_img_name, p.desc_img_path
+		, p.prdt_rdy, p.option_yn, p.bigcate_no, p.smallcate_no, s.smallcate_name, l.seller_name, m.mem_photopath
+    	from product p, member m, bigcate b, smallcate s, seller l
+		where del_yn = 0
+		and p.smallcate_no = #{smallcate_no}
+        and s.smallcate_no = #{smallcate_no}
+        and b.bigcate_no = s.bigcate_no
+        and p.mem_no = m.mem_no
+        and l.mem_no = m.mem_no
+		order by prdt_no desc
+	</select>
+
+	<select id="bigcatelist" parameterType="java.lang.String"  resultType="kr.co.handflea.product.ProductDTO">
+	select distinct p.prdt_no, p.prdt_name, p.mem_no, m.mem_email, p.price, p.delivery_price
+		, p.description, p.view_cnt, p.reg_date
+		, p.thumbnail_name, p.thumbnail_path, p.desc_img_name, p.desc_img_path, p.prdt_rdy, p.option_yn
+		, p.bigcate_no, p.smallcate_no, b.bigcate_name, l.seller_name, m.mem_photopath
+    	from product p, member m, bigcate b, smallcate s, seller l
+		where del_yn = 0
+		and p.bigcate_no = #{bigcate_no}
+        and b.bigcate_no = #{bigcate_no}
+        and b.bigcate_no = s.bigcate_no
+        and p.mem_no = m.mem_no
+        and l.mem_no = m.mem_no
+		order by prdt_no desc
+	</select>
+
+	<update id="incrementViewCnt" parameterType="java.lang.String">
+	update product
+	set view_cnt = view_cnt + 1
+	where prdt_no = #{prdt_no}
+	</update>
+	
+	<select id="main" parameterType="kr.co.handflea.util.dto.SearchDTO"
+			resultType="kr.co.handflea.product.ProductDTO">
+		select p.prdt_no, p.prdt_name, p.mem_no, m.mem_email, p.price, p.delivery_price
+		, p.description, p.view_cnt, p.reg_date
+		, p.thumbnail_name, p.thumbnail_path, p.desc_img_name, p.desc_img_path
+		, p.prdt_rdy, p.option_yn, p.bigcate_no, p.smallcate_no, s.seller_name, m.mem_photopath
+    	from product p, member m, seller s
+		where del_yn = 0
+		<if test="searchOption != null and searchOption != ''
+					and searchWord != null and searchWord !=''">
+			<choose>
+				<when test="searchOption == 'prdt_name'">
+					and p.prdt_name like concat('%', #{searchWord}, '%')
+				</when>
+				<when test="searchOption == 'mem_email'">
+					and m.mem_email like concat('%', #{searchWord}, '%')
+				</when>
+			</choose>
+		</if>
+		and p.mem_no = m.mem_no
+		and s.mem_no = m.mem_no
+		order by prdt_no desc
+		limit #{limitNum}, 8
+	</select>
+	
+	<select id="bestmain" parameterType="kr.co.handflea.util.dto.SearchDTO"
+			resultType="kr.co.handflea.product.ProductDTO">
+		select p.prdt_no, p.prdt_name, count(detail_no) cnt
+		, p.thumbnail_path, m.mem_photopath, s.seller_name, p.price
+		from product p, order_detail od, member m, seller s
+		where od.prdt_no = p.prdt_no
+		<if test="searchOption != null and searchOption != ''
+					and searchWord != null and searchWord !=''">
+			<choose>
+				<when test="searchOption == 'prdt_name'">
+					and p.prdt_name like concat('%', #{searchWord}, '%')
+				</when>
+				<when test="searchOption == 'mem_email'">
+					and m.mem_email like concat('%', #{searchWord}, '%')
+				</when>
+			</choose>
+		</if>
+		and p.mem_no = m.mem_no
+		and s.mem_no = m.mem_no
+		group by (p.prdt_no)
+		order by cnt desc
+		limit #{limitNum}, 8
+	</select>
+	
+	<insert id="option_insert" parameterType="kr.co.handflea.product.ProductDTO">
+	insert into prdt_option (prdt_no, option_contents)
+	values
+		<foreach item="item" collection="arr_option" separator=",">
+			( #{prdt_no}, #{item} )
+		</foreach>
+	</insert>
+
+	<insert id="insert" parameterType="kr.co.handflea.product.ProductDTO">
+	insert into product (prdt_name, mem_no, price, delivery_price, description, reg_date
+						, thumbnail_name, thumbnail_path, desc_img_name, desc_img_path, prdt_rdy, option_yn, bigcate_no, smallcate_no)
+	values(#{prdt_name}, #{mem_no}, #{price}, #{delivery_price}, #{description}, now()
+			, #{thumbnail_name}, #{thumbnail_path}, #{desc_img_name}, #{desc_img_path}
+			, #{prdt_rdy}, #{option_yn}, #{bigcate_no}, #{smallcate_no}) 
+		<selectKey resultType="String" keyProperty="prdt_no" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<select id="smallcateSelect" parameterType="java.lang.String" resultType="kr.co.handflea.product.ProductDTO">
+	select smallcate_no, smallcate_name
+	from smallcate
+	where bigcate_no = #{bigcate_no}
+	</select>
+
+	<select id="bigcateSelect" resultType="kr.co.handflea.product.ProductDTO">
+	select bigcate_no, bigcate_name
+	from bigcate
+	order by bigcate_no
+	</select>
+	
+	<select id="reviewCnt" parameterType="java.lang.String" resultType="java.lang.String">
+	select count(review_no) count
+	from review
+	where prdt_no = #{prdt_no}
+	group by prdt_no
+	</select>
+	
+	<select id="reviewPoint" parameterType="java.lang.String" resultType="java.lang.String">
+	select avg(star_point) point
+	from review
+	where prdt_no = #{prdt_no}
+	group by prdt_no
+	</select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="QnAMapper">
+
+	<update id="update" parameterType="kr.co.handflea.QnA.QnADTO">
+	update QnA
+	set title = #{title}, contents = #{contents}
+	where qna_no = #{qna_no}
+	and mem_no = #{mem_no}
+	</update>
+
+	<delete id="delete" parameterType="kr.co.handflea.QnA.QnADTO">
+	delete from QnA
+	where qna_no = #{qna_no}
+	and mem_no = #{mem_no}
+	</delete>
+
+	<update id="incrementViewCnt" parameterType="java.lang.String">
+	update QnA
+	set view_cnt = view_cnt + 1
+	where qna_no = #{qna_no}
+	</update>
+
+	<select id="detail" parameterType="java.lang.String" resultType="kr.co.handflea.QnA.QnADTO">
+	select q.qna_no, q.title, q.mem_no, m.mem_name, q.contents, q.view_cnt, q.write_date, q.answer_yn, q.answer, m.mem_photopath
+	from QnA q, member m
+	where q.mem_no = m.mem_no
+	and q.qna_no = #{qna_no}
+	</select>
+
+	<insert id="write" parameterType="kr.co.handflea.QnA.QnADTO">
+	insert into QnA ( title, mem_no, contents, view_cnt, write_date )
+	values ( #{title}, #{mem_no}, #{contents}, 0, now() )
+	</insert>
+
+	<select id="selectList" parameterType="kr.co.handflea.util.dto.SearchDTO"
+			resultType="kr.co.handflea.QnA.QnADTO">
+	select q.qna_no, q.title, m.mem_name, q.view_cnt, q.write_date, q.answer_yn, m.mem_no
+	from QnA q, member m
+	where q.mem_no = m.mem_no
+	   <if test="searchOption != null and searchOption != ''
+	               and searchWord != null and searchWord != ''">
+	         <choose>
+	            <when test="searchOption == 'title'">
+	               and q.title like concat('%', #{searchWord}, '%')
+	            </when>
+	            <when test="searchOption == 'writer'">
+	               and writer like concat('%', #{searchWord}, '%')
+	            </when>
+	         </choose>
+	      </if>
+	   order by q.qna_no desc
+	   limit #{limitNum}, 10
+	</select>
+	
+	<select id="searchListCount" parameterType="kr.co.handflea.util.dto.SearchDTO" resultType="int">
+		select count(qna_no) cnt
+		from QnA
+		<if test="searchOption != null and searchOption != ''
+					and searchWord != null and searchWord !=''">
+			<choose>
+				<when test="searchOption == 'title'">
+					where title like concat('%', #{searchWord}, '%')
+				</when>
+				<when test="searchOption == 'writer'">
+					where writer like concat('%', #{searchWord}, '%')
+				</when>
+			</choose>
+		</if>
+	</select>
+
+</mapper>

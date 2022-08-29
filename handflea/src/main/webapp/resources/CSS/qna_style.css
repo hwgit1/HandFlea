@@ -1,0 +1,280 @@
+@charset "UTF-8";
+
+#qna-list {
+	width: 100%;
+	margin: 20px 0;
+}
+#qna-list > table {
+	width: 100%;
+	margin: auto;
+	border-collapse: collapse;
+}
+#qna-list > table td {
+	padding: 5px 0;
+}
+#qna-list thead {
+	background-color: #a8a8a8;
+	text-align: center;
+	font-weight: 500;
+}
+.qna_no {
+	width: 10%;
+	text-align: center;
+}
+.qna_title {
+	width: 40%;
+}
+.qna_title a {
+	color: black;
+}
+.qna_title a:hover {
+	color: #0F8BFF;
+}
+.qna_writer {
+	width: 15%;
+	text-align: center;
+}
+.qna_view {
+	width: 10%;
+	text-align: center;
+}
+.qna_date {
+	width: 15%;
+	font-size: small;
+	text-align: center;
+}
+thead .qna_date {
+	font-size: medium;
+}
+.qna_yn {
+	width: 10%;
+	text-align: center;
+}
+#qna-list td {
+	border-bottom: 1px solid #cecece;
+}
+#board-bottom {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 20px 0;
+}
+.search-box {
+	width: 80%;
+	margin: 0;
+}
+.search-box > form {
+	text-align: center;
+}
+.search-box select {
+	width: 15%;
+	height: 35px;
+	font-size: 15px;
+}
+.search-box input {
+	padding: 5px;
+	width: 50%;
+}
+.search-box button {
+	background-color: #0F8BFF;
+	color: white;
+	padding: 5px;
+	border-radius: 4px;
+	font-size: 15px;
+}
+#button-box {
+	width: 10%;
+}
+#button-box button {
+	background-color: #0F8BFF;
+	color: white;
+	padding: 5px;
+	border-radius: 4px;
+	font-size: 15px;
+}
+#write-top {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+#write-top > h2 {
+	width: 80%;
+}
+#write-button-box {
+	width: 20%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-align: right;
+}
+#write_btn {
+	display: block;
+	width: 80px;
+	background-color: #0F8BFF;
+	color: white;
+	padding: 5px;
+	border-radius: 4px;
+	font-size: 15px;
+	margin: 0 3px;
+}
+#write-button-box a {
+	width: 50%;
+	margin: 0;
+}
+#write-button-box > a > button {
+	margin: 0 3px;
+	background-color: #C1000C;
+	color: white;
+	padding: 5px;
+	border-radius: 4px;
+	font-size: 15px;
+}
+#write-box {
+	width: 100%;
+}
+#write-title {
+	width: 100%;
+}
+#write-title > input {
+	width: 100%;
+	padding: 5px;
+	font-size: medium;
+}
+#write-contents {
+	margin-top: 10px;
+}
+#qna-detail {
+	width: 80%;
+}
+#qna-question {
+	width: 100%;
+	background-color: #f9f9f9;
+	border: 1px solid #808080;
+	margin: 10px auto;
+}
+#qna-top {
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+	border-bottom: 1px solid #808080;
+}
+#qna-top > h3 {
+	text-align: left;
+	width: 70%;
+}
+#qna-top > p {
+	font-size: small;
+	text-align: right;
+	width: 30%;
+}
+#qna-middle {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 30px;
+	padding: 5px 10px;
+	border-bottom: 1px solid #808080;
+}
+#qna-img {
+	width: 30px;
+	height: 30px;
+	border-radius: 70%;
+	overflow: hidden;
+	margin: 0;
+}
+#qna-img > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+#qna-profile {
+	margin: 0 5px;
+	text-align: left;
+}
+#qna-profile > p {
+	text-align: right;
+}
+#qna-bottom {
+	padding: 25px 15px 50px 15px;
+}
+#qna-button {
+	padding: 15px;
+	text-align: right;
+}
+#qna-button > button {
+	margin: 0 3px;
+	background-color: #C1000C;
+	color: white;
+	padding: 5px;
+	border-radius: 4px;
+	font-size: 15px;
+}
+#qna-button > a > button {
+	background-color: #0F8BFF;
+	color: white;
+	padding: 5px;
+	border-radius: 4px;
+	font-size: 15px;
+	margin: 0 3px;
+}
+#qna-reply {
+	width: 100%;
+	background-color: #f9f9f9;
+	border: 1px solid #808080;
+	margin: 10px auto;
+}
+#qna-reply-top {
+	padding: 10px;
+	border-bottom: 1px solid #808080;
+}
+#qna-reply-top > h3 {
+	text-align: left;
+	width: 100%;
+}
+#qna-reply-bottom {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+#qna-reply-admin {
+	padding: 20px;
+	width: 15%;
+	margin: 0;
+}
+#qna-reply-input {
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+}
+#qna-reply-input > textarea {
+	width: 90%;
+	padding: 10px;
+	font-size: medium;
+	border-radius: 4px 0 0 4px;
+}
+#qna-reply-input > button {
+	width: 10%;
+	background-color: #5b5b5b;
+	padding: 5px 10px;
+	color: white;
+	border-radius: 0 4px 4px 0;
+}
+#qna-reply-input > p {
+	width: 100%;
+	padding: 10px;
+	font-size: medium;
+	text-align: left;
+}
+#list-button {
+	text-align: center;
+	margin-top: 20px;
+}
+#list-button button {
+	text-align: center;
+	background-color: #5b5b5b;
+	padding: 5px 10px;
+	color: white;
+	border-radius: 4px;
+}

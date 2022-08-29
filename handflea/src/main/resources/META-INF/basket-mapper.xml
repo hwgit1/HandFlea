@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BasketMapper">
+
+	<update id="updateBuyQty" parameterType="kr.co.handflea.product.ProductDTO">
+	update basket
+	set buy_qty = #{buy_qty}
+	where basket_no = #{basket_no}
+	and mem_no = #{mem_no}
+	</update>
+
+	<delete id="delete" parameterType="kr.co.handflea.product.ProductDTO">
+	delete from basket
+	where basket_no = #{basket_no}
+	</delete>
+
+	<select id="list" parameterType="java.lang.String" resultType="kr.co.handflea.product.ProductDTO">
+	select b.basket_no, b.mem_no, m.mem_name, b.prdt_no, b.buy_qty, b.reg_date
+			, p.prdt_no, p.prdt_name, p.mem_no, s.seller_name, p.price, p.delivery_price
+			, ( p.price * b.buy_qty) + p.delivery_price total_price
+			, p.description, p.view_cnt, p.reg_date
+			, p.thumbnail_name, p.thumbnail_path
+			, o.option_no, o.option_contents
+	from basket b, member m, product p, seller s, prdt_option o
+	where b.mem_no = #{mem_no}
+	and b.mem_no = m.mem_no
+	and b.prdt_no = p.prdt_no
+	and p.mem_no = s.mem_no
+	and p.prdt_no = o.prdt_no
+    and b.option_no = o.option_no
+	order by b.reg_date desc;
+	</select>
+
+	<insert id="insert" parameterType="kr.co.handflea.product.ProductDTO">
+	insert into basket (mem_no , prdt_no, buy_qty, reg_date, option_no)
+	values(#{mem_no}, #{prdt_no}, #{buy_qty}, now(), #{option_no})
+	</insert>
+
+</mapper>

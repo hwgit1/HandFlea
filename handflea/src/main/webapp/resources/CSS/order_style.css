@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+table {
+	width: 100%;
+	border: 1px solid #cecece;
+	border-collapse: collapse;
+}
+th {
+	font-weight: 500;
+	padding: 5px;
+}
+main > h3 {
+	width: 80%;
+}
+main > div {
+	margin: 20px auto;
+	width: 80%;
+}
+#buyer-info > table th {
+	border-bottom: 1px solid #cecece;
+	width: 20%;
+}
+#buyer-info > table td {
+	border-bottom: 1px solid #cecece;
+}
+.btn-td {
+	width: 20%;
+}
+#addr-change, #add_btn {
+	background-color: #5b5b5b;
+	color: white;
+	text-align: center;
+	border-radius: 4px;
+	padding: 5px 10px;
+	width: 100px;
+}
+#addr-input-btn {
+	text-align: center;
+	border-radius: 4px;
+	padding: 5px 10px;
+	width: 100px;
+	border: 1px solid #5b5b5b;
+}
+.buyer-addr {
+	display: none;
+}
+#addr-input > div {
+	margin-top: 3px;
+}
+#addr-input input {
+	padding: 5px;
+	margin-bottom: 3px;
+}
+#add_1 {
+	width: 
+}
+#prdt-info-table {
+	text-align: center;
+}
+#prdt-info-table th {
+	border-bottom: 1px solid #cecece;
+}
+#prdt-info-table td {
+	border-bottom: 1px solid #cecece;
+}
+.table-order {
+	height: 80px;
+}
+.table-prdt {
+	width: 60%;
+}
+.order-prdt {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+	align-items: center;
+}
+.order-prdt-img {
+	width: 15%;
+	display: flex;
+	align-items: center;
+}
+.order-prdt-img > img {
+	height: 70px;
+	width: auto;
+	overflow: hidden;
+}
+.order-prdt-outline {
+	width: 90%;
+	text-align: left;
+	margin-left: 5px;
+}
+.order-prdt-outline a {
+	color: black;
+	text-decoration: none;
+}
+.order-prdt-outline a:hover {
+	color: #0F8BFF;
+}
+.order-prdt-outline > p {
+	font-size: small;
+	margin-top: 5px;
+}
+.order-prdt-outline span {
+	background-color: #808080;
+	color: white;
+	padding: 0 5px;
+	margin-right: 5px;
+}
+.table-qty {
+	width: 5%;
+}
+.table-dprice {
+	width: 10%;
+}
+.table-prdtprice {
+	width: 10%;
+}
+.table-totalprice {
+	width: 15%;
+}
+#order-btn-box {
+	text-align: center;
+}
+#order_btn {
+	background-color: #0F8BFF;
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+}
+#basket > table {
+	text-align: center;
+}
+.basket-chk {
+	width: 5%;
+}
+.basekt-prdt {
+	width: 40%;
+}
+.basket-price {
+	width: 10%;
+}
+.basket-qty {
+	width: 10%;
+}
+.basket-amt {
+	width: 15%;
+}
+.basket-deliamt {
+	width: 15%;
+}
+.basket-delete {
+	width: 5%
+}
+#basket th {
+	background-color: #b4b4b4;
+	text-align: center;
+	font-weight: 500;
+	padding: 5px;
+}
+#basket td {
+	border-bottom: 1px solid #cecece;
+}
+.qty_chg_btn {
+	background-color: white;
+	border: 1px solid #0F8BFF;
+	border-radius: 2px;
+}
+.basket_delete_btn {
+	background-color: #C1000C;
+	color: white;
+	padding: 5px 8px;
+	border-radius: 4px;
+}
+#basket-total {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-align: center;
+	border: 1px solid #cecece;
+}
+#basket-total > div {
+	padding: 20px;
+}
+#chk-sum {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 50%;
+}
+#chk-sum img {
+	width: 50px;
+}

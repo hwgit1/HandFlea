@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="JoinMapper">
+
+	<insert id="join" parameterType="kr.co.handflea.util.dto.MemberDTO">
+	INSERT INTO member ( mem_name, mem_email, mem_pwd, pnum, mdate
+		, post_code, add_1, add_2 )
+	VALUES ( #{mem_name}, #{mem_email}, #{mem_pwd}, #{pnum}, now()
+		,#{post_code}, #{add_1}, #{add_2} )
+	</insert>
+
+	<select id="idCheck" parameterType="java.lang.String" resultType="int">
+	select count(mem_email) cnt
+	from member
+	where mem_email = #{mem_email}
+	</select>
+
+</mapper>

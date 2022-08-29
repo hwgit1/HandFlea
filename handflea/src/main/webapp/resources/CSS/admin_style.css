@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+.list-box {
+	margin: 20px 0;
+}
+#mem-list {
+	text-align: center;
+	font-size: 15px;
+}
+#mem-list th {
+	font-weight: 600;
+}
+
+
+.list-box > table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+}
+.list-top {
+	background-color: #a8a8a8;
+}
+.list-top > th {
+	font-weight: 500;
+	padding: 7px 0;
+}
+.mem-list td {
+	width: 5px 0;
+}
+.list-box > table td {
+	padding: 7px 0;
+	border-bottom: 1px solid #cecece;
+}
+.revoke_btn {
+	background-color: #333333;
+	color: white;
+	padding: 3px;
+	border-radius: 3px;
+}
+.order-no {
+	width: 10%;
+}
+.order-name {
+	width: 30%;
+}
+.order-qty {
+	width: 5%;
+}
+.order-amt {
+	width: 10%;
+}
+.buyer {
+	width: 15%;
+}
+.seller {
+	width: 15%;
+}
+.refund {
+	width: 15%;
+}
+.admin_refund {
+	background-color: #333333;
+	color: white;
+	padding: 3px;
+	border-radius: 3px;
+}

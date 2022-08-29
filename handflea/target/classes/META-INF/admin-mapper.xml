@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminMapper">
+
+	<update id="replyInsert" parameterType="kr.co.handflea.QnA.QnADTO">
+	update qna set answer = #{answer}, answer_yn = #{answer_yn} where qna_no = #{qna_no}
+	</update>
+
+   <select id="memberList" parameterType="java.lang.String" resultType="kr.co.handflea.util.dto.MemberDTO">
+   select mem_no, mem_name, mem_email, pnum, seller_yn
+   from member
+   where mem_no not in (#{mem_no})
+   </select>
+   
+   <update id="sellerRevoke" parameterType="java.lang.String">
+   update member set seller_yn = '0'
+   where mem_no = #{mem_no}
+   </update>
+
+	<update id="deletePrdt" parameterType="java.lang.String">
+	update product set del_yn = '1'
+	where mem_no = #{mem_no}
+	</update>
+
+	<update id="incrementViewCnt" parameterType="java.lang.String">
+	update QnA
+	set view_cnt = view_cnt + 1
+	where qna_no = #{qna_no}
+	</update>
+
+	<select id="detail" parameterType="java.lang.String" resultType="kr.co.handflea.QnA.QnADTO">
+	select q.qna_no, q.title, m.mem_name, q.contents, q.view_cnt, q.write_date, q.answer_yn, q.answer
+	from QnA q, member m
+	where q.mem_no = m.mem_no
+	and q.qna_no = #{qna_no}
+	</select>
+
+	<insert id="write" parameterType="kr.co.handflea.QnA.QnADTO">
+	insert into QnA ( title, mem_no, contents, view_cnt, write_date )
+	values ( #{title}, #{mem_no}, #{contents}, 0, now() )
+	</insert>
+
+	<select id="selectList" parameterType="kr.co.handflea.util.dto.SearchDTO"
+			resultType="kr.co.handflea.QnA.QnADTO">
+	select q.qna_no, q.title, m.mem_name, q.view_cnt, q.write_date, q.answer_yn
+	from QnA q, member m
+	where q.mem_no = m.mem_no
+	   <if test="searchOption != null and searchOption != ''
+	               and searchWord != null and searchWord != ''">
+	         <choose>
+	            <when test="searchOption == 'title'">
+	               and q.title like concat('%', #{searchWord}, '%')
+	            </when>
+	            <when test="searchOption == 'writer'">
+	               and writer like concat('%', #{searchWord}, '%')
+	            </when>
+	         </choose>
+	      </if>
+	   order by q.qna_no desc
+	   limit #{limitNum}, 10
+	</select>
+
+	<select id="searchListCount" parameterType="kr.co.handflea.util.dto.SearchDTO" resultType="int">
+		select count(qna_no) cnt
+		from QnA
+		<if test="searchOption != null and searchOption != ''
+					and searchWord != null and searchWord !=''">
+			<choose>
+				<when test="searchOption == 'title'">
+					where title like concat('%', #{searchWord}, '%')
+				</when>
+				<when test="searchOption == 'writer'">
+					where writer like concat('%', #{searchWord}, '%')
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="refundList" resultType="kr.co.handflea.order.OrderDTO">
+	select od.detail_no, p.prdt_name, od.buy_qty, od.pay_amt, m.mem_name, s.seller_name
+	from order_detail od, product p, order_main om, member m, seller s
+	where od.order_no = om.order_no
+	and od.prdt_no = p.prdt_no
+	and om.mem_no = m.mem_no
+	and p.mem_no = s.mem_no
+	and od.prdt_con = 4;
+	</select>
+   
+	<select id="refundCompleteList" resultType="kr.co.handflea.order.OrderDTO">
+	select od.detail_no, p.prdt_name, od.buy_qty, od.pay_amt, m.mem_name, s.seller_name
+	from order_detail od, product p, order_main om, member m, seller s
+	where od.order_no = om.order_no
+	and od.prdt_no = p.prdt_no
+	and om.mem_no = m.mem_no
+	and p.mem_no = s.mem_no
+	and od.prdt_con = 5;
+	</select>
+	
+	<update id="orderRefund" parameterType="java.lang.String">
+	update order_detail
+	set prdt_con = 5
+	where detail_no = #{detail_no}
+	</update>
+</mapper>

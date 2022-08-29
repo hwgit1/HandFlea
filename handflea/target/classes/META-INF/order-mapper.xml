@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderMapper">
+
+	<select id="buyOrderList" parameterType="kr.co.handflea.product.ProductDTO" resultType="kr.co.handflea.product.ProductDTO">
+	select p.prdt_no, p.prdt_name, o.option_no, o.option_contents, p.price, 
+		   p.delivery_price, p.thumbnail_name, p.thumbnail_path,
+		   (p.price * #{buy_qty}) + p.delivery_price total_price, #{buy_qty} as buy_qty
+		   from product p, prdt_option o
+		   where p.prdt_no = #{prdt_no}
+           and o.option_no = #{option_no}
+	</select>
+	
+	<select id="buyerInfo" parameterType="java.lang.String" resultType="kr.co.handflea.util.dto.MemberDTO">
+	select mem_no, mem_name, pnum, post_code, add_1, add_2
+	from member
+	where mem_no = #{mem_no}
+	</select>
+
+	<select id="orderList" resultType="kr.co.handflea.product.ProductDTO">
+	select b.basket_no, p.prdt_no, p.prdt_name, o.option_no, o.option_contents, p.price, 
+		   p.delivery_price, p.thumbnail_name, p.thumbnail_path,
+		   (p.price * b.buy_qty) + p.delivery_price total_price, b.buy_qty
+		   from product p, prdt_option o, basket b
+		   where b.basket_no in 
+		   		<foreach item="basket_no" collection="array" open="(" close=")" separator=",">
+		   		#{basket_no}
+		   		</foreach>
+           and p.prdt_no = o.prdt_no
+           and p.prdt_no = b.prdt_no
+           and b.option_no = o.option_no
+           order by b.reg_date desc
+	</select>
+	
+	<insert id="insertOrder" parameterType="kr.co.handflea.order.OrderDTO">
+	insert into order_main (mem_no, prdt_cnt, total_pay_amt, order_date, delivery_addr) 
+	values (#{mem_no}, #{prdt_cnt}, #{total_pay_amt}, now(), #{delivery_addr});
+		<selectKey resultType="String" keyProperty="order_no" order="AFTER">
+		select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertBasketOrder" parameterType="kr.co.handflea.order.OrderDTO">
+	insert into order_detail (order_no, prdt_no, prdt_price, option_no, prdt_delivery_price, buy_qty, pay_amt) 
+	select #{order_no}, p.prdt_no, p.price, b.option_no, p.delivery_price, b.buy_qty, (p.price * b.buy_qty + p.delivery_price)
+	from product p, basket b
+	where b.basket_no in
+		<foreach item="basket_no" collection="arr_basket_no" open="(" close=")" separator=",">
+		#{basket_no}
+		</foreach>
+	and b.prdt_no = p.prdt_no
+	order by b.reg_date
+	</insert>
+	
+	<delete id="deleteBasket">
+	delete from basket b
+	where b.basket_no in
+		<foreach item="basket_no" collection="array" open="(" close=")" separator=",">
+		#{basket_no}
+		</foreach>
+	</delete>
+	
+	<insert id="insertNowOrder" parameterType="kr.co.handflea.order.OrderDTO">
+	insert into order_detail (order_no, prdt_no, prdt_price, option_no, prdt_delivery_price, buy_qty, pay_amt)
+	select #{order_no}, p.prdt_no, p.price, #{buy_now_option_no}, p.delivery_price, #{buy_now_qty}, (#{buy_now_qty} * p.price + p.delivery_price)
+	from product p
+	where p.prdt_no = #{buy_now_prdt_no}
+	</insert>
+	
+	<update id="deliveryUpdate" parameterType="kr.co.handflea.order.OrderDTO">
+	update order_detail set delivery_c_no = #{delivery_c_no}, delivery_no = #{delivery_no}, prdt_con = #{prdt_con}
+	where detail_no = #{detail_no}
+	</update>
+	
+	<update id="prdtReceive" parameterType="kr.co.handflea.order.OrderDTO">
+	update order_detail set prdt_con = #{prdt_con}
+	where detail_no = #{detail_no}
+	</update>
+	
+	<insert id="insertAmt" parameterType="kr.co.handflea.order.OrderDTO">
+	insert adjustment (mem_no, fundage, deposit, reg_date, detail_no)
+	values ((select p.mem_no from product p, order_detail od where od.prdt_no = p.prdt_no and od.detail_no = #{detail_no}),
+			(select s.seller_money from seller s, order_detail od, product p where od.detail_no = #{detail_no} and od.prdt_no = p.prdt_no and p.mem_no = s.mem_no),
+        	(select od.pay_amt from order_detail od where od.detail_no = #{detail_no}), now(), #{detail_no});
+	</insert>
+	
+	<update id="updateSellerPrice" parameterType="java.lang.String">
+	update seller set seller_money = seller_money + (select od.pay_amt from order_detail od where od.detail_no = #{detail_no})
+	where mem_no = (select p.mem_no from product p, order_detail od where od.prdt_no = p.prdt_no and od.detail_no = #{detail_no})
+	</update>
+	
+	<update id="prdtRefund" parameterType="kr.co.handflea.order.OrderDTO">
+	update order_detail set prdt_con = #{prdt_con}
+	where detail_no = #{detail_no}
+	</update>
+	
+</mapper>
