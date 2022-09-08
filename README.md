@@ -89,7 +89,7 @@
 
 https://user-images.githubusercontent.com/107243294/189022714-616a3cbf-a1e9-44c1-9755-6cff87f74133.mp4
 
-
+<br>
 카테고리(대분류, 소분류), 검색, 상품 상세, 후기 리스트
 
 https://user-images.githubusercontent.com/107243294/189022877-94cdd07f-c297-49bd-8a47-d01d84dc2c6e.mp4
