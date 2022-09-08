@@ -1,5 +1,5 @@
-# ![image](https://user-images.githubusercontent.com/107243294/189022362-bad09398-f1d3-4635-93c9-1d3c153d2f7c.png)
-#### 판매자와 구매자 모두 깔끔한 UI와 편리한 기능을 통해 불편 없이 수제품을 사고 팔 수 있는 수제품 중개 플랫폼 웹 사이트 
+# ![image](https://user-images.githubusercontent.com/107243294/189022362-bad09398-f1d3-4635-93c9-1d3c153d2f7c.png) #### 판매자와 구매자 모두 깔끔한 UI와 편리한 기능을 통해 불편 없이 수제품을 사고 팔 수 있는 수제품 중개 플랫폼 웹 사이트 
+
 ## 구현 기능
 
 
