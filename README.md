@@ -81,8 +81,65 @@
 ● 환불 처리
 회원이 환불 신청한 주문에 대하여 환불 승인 가능
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-https://user-images.githubusercontent.com/107243294/189022119-f78d7052-a75e-4c51-b348-bcac50e13469.mp4
+시연 영상
+
+로그인 -> 회원가입
+
+https://user-images.githubusercontent.com/107243294/189022714-616a3cbf-a1e9-44c1-9755-6cff87f74133.mp4
+
+카테고리(대분류, 소분류), 검색, 상품 상세, 후기 리스트
+
+https://user-images.githubusercontent.com/107243294/189022877-94cdd07f-c297-49bd-8a47-d01d84dc2c6e.mp4
+
+채팅
+
+https://user-images.githubusercontent.com/107243294/189023463-b12c173b-4202-45bb-8adf-1f153a53519a.mp4
+
+장바구니 -> 주문
+
+https://user-images.githubusercontent.com/107243294/189022954-2df8ac2d-b1cd-4aee-b631-1c392f98436e.mp4
+
+바로구매 -> 주문 내역
+
+https://user-images.githubusercontent.com/107243294/189023044-dd8331a2-e611-4f11-b22a-bf8ef15e5974.mp4
+
+상품 후기
+
+https://user-images.githubusercontent.com/107243294/189023113-4a8fdb8a-bdda-488b-9522-4b034661f4e9.mp4
+
+일반회원 정보 변경 및 탈퇴
+
+https://user-images.githubusercontent.com/107243294/189023191-799d6fc6-502e-4223-a0c2-46dcd31e5fad.mp4
+
+판매자 등록 및 정보 수정
+
+https://user-images.githubusercontent.com/107243294/189023260-c1e98358-789c-455f-87d2-103ece3e1f86.mp4
+
+상품 등록
+
+https://user-images.githubusercontent.com/107243294/189023319-90d0c3b6-f09d-4edb-8bc7-42812bf72394.mp4
+
+상품 수정 삭제
+
+https://user-images.githubusercontent.com/107243294/189023357-8df07665-fa30-42e9-a845-e023dd8300ea.mp4
+
+배송정보 등록, 인출
+
+https://user-images.githubusercontent.com/107243294/189023401-df7d66c4-5fce-441d-b688-94c535fd910b.mp4
+
+Q&A(회원 및 관리자)
+
+https://user-images.githubusercontent.com/107243294/189023605-3c4cd0b9-64d1-44f9-a5dd-a959d084d7ff.mp4
+
+환불신청 및 환불처리
+
+https://user-images.githubusercontent.com/107243294/189023666-f80d157e-83e7-4420-8f36-c3ddda5b441a.mp4
+
+회원관리 -> 판매자 권한 회수
+
+https://user-images.githubusercontent.com/107243294/189023776-63d70010-88bc-4022-b0f9-3fecfecd197c.mp4
 
 
 
